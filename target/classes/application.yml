@@ -1,0 +1,52 @@
+server:
+  port: 8765
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+zuul:
+  ignoredServices: "*"
+  prefix: /api
+#  routes:
+#    #userapi: /user/**
+
+
+# EUREKA Configuration
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    statusPageurlPath: /admin/info
+    healthCheckUrlPath: /admin/health
+    metadataMap:
+      password: ${security.user.password}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+# LOGGING Configuration
+logging:
+  level:
+    ROOT: INFO
+    com.netflix: 'WARN'
+    org.springframework.cloud: 'WARN'
+    org.springframework.boot.env.PropertySourcesLoader: TRACE
+    org.springframework.web: DEBUG
+
+# SSH Based Git-Repository
+spring:
+  cloud:
+    config:
+      enabled: false
+      server:
+        git:
+          uri: https://github.com/kirstywilliams/ms-config
+
+# Server Security
+security:
+  user:
+    password: '{cipher}fc2d18c3e4ab42301e43e36bdee8bb80b7516bc9a1ef68e35ead416b69939bd0'
